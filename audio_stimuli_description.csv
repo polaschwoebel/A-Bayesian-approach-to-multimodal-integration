@@ -1,7 +1,7 @@
 name,path
 left100,/sounds/legit/left100.wav
-left60,/sounds/legit/left60.wav
-left30,/sounds/legit/left30.wav
-right30,/sounds/legit/right30.wav
-right60,/sounds/legit/right60.wav
+left60,/sounds/legit/left70.wav
+left30,/sounds/legit/left35.wav
+right30,/sounds/legit/right35.wav
+right60,/sounds/legit/right70.wav
 right100,/sounds/legit/right100.wav

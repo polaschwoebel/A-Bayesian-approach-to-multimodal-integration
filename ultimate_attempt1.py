@@ -37,9 +37,10 @@ expInfo['expName'] = expName
 
 ### INFO ABOUT THE NUMBER AND SIZE OF DOTS
 totalNumberOfDots = 30;
-scopeOfTheDistribution = 160;
+scopeOfTheDistribution = 500;
 mon=monitors.Monitor('myComputer')
 sizeOfDots = tools.monitorunittools.deg2pix(6.75/60, mon);
+borderOfYnoise = tools.monitorunittools.deg2pix(1, mon);
 
 
 ####ADDING TWO FUNCTIONS RESPONSIBLE FOR GENERATION OF NORMAL DISTRIBUTION AND NOISE
@@ -781,7 +782,7 @@ for thisVisualTrial in visualTrials:
             noiseDotsCoordinates = []
             for x in range(numberOfNoiseDots):
                 dot_x = random.uniform(-640+(sizeOfDots/2), 640-(sizeOfDots/2))
-                dot_y = random.uniform(-400+(sizeOfDots/2), 400-(sizeOfDots/2))
+                dot_y = random.uniform(-borderOfYnoise, borderOfYnoise)
                 noiseDotsCoordinates.append([dot_x, dot_y])
             # VisualComparison.setImage('/Users/admin/Documents/IT&Cognition/Cognitive Science2/experiment-exam/catimg.png')
             # component updates done
@@ -1032,8 +1033,8 @@ for thisCombinedTrial in combinedTrials:
                 xys=comparisonBump, sizes=sizeOfDots)
             noiseDotsCoordinates = []
             for x in range(numberOfNoiseDots):
-                dot_x = random.uniform(-640, 640)
-                dot_y = random.uniform(-400, 400)
+                dot_x = random.uniform(-640+(sizeOfDots/2), 640-(sizeOfDots/2))
+                dot_y = random.uniform(-borderOfYnoise, borderOfYnoise)
                 noiseDotsCoordinates.append([dot_x, dot_y])
             # VisualComparison.setImage('/Users/admin/Documents/IT&Cognition/Cognitive Science2/experiment-exam/catimg.png')
             # component updates done
