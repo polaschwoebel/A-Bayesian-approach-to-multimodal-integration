@@ -41,6 +41,7 @@ scopeOfTheDistribution = 500;
 mon=monitors.Monitor('myComputer')
 sizeOfDots = tools.monitorunittools.deg2pix(6.75/60, mon);
 borderOfYnoise = tools.monitorunittools.deg2pix(1, mon);
+locationOfCombinedStandard = tools.monitorunittools.deg2pix([-2.25,0], mon, correctFlat=True)
 
 
 ####ADDING TWO FUNCTIONS RESPONSIBLE FOR GENERATION OF NORMAL DISTRIBUTION AND NOISE
@@ -192,7 +193,7 @@ CombinedISI1 = core.StaticPeriod(win=win, screenHz=expInfo['frameRate'], name='C
 #     flipHoriz=False, flipVert=False,
 #     texRes=128, interpolate=True, depth=-1.0)
 CombVisualStandard = defaultDot
-CombSoundStandard = sound.Sound(_thisDir + '/sounds/legit/right30.wav', secs=-1)
+CombSoundStandard = sound.Sound(_thisDir + '/sounds/legit/right35.wav', secs=-1)
 CombSoundStandard.setVolume(1)
 AfterStandardISI = core.StaticPeriod(win=win, screenHz=expInfo['frameRate'], name='AfterStandardISI')
 CombSoundComparison = sound.Sound('A', secs=-1)
@@ -206,7 +207,7 @@ CombSoundComparison.setVolume(1)
 #     texRes=128, interpolate=True, depth=-5.0)
 CombVisualComparison = defaultDot
 CombVisualNoiseElement = defaultDot
-combineaudioFix = sound.Sound("A", secs=-1)
+combineaudioFix = sound.Sound(_thisDir + '/sounds/fixationSound.wav', secs=-1)
 combineaudioFix.setVolume(1)
 combinedFixationCross = visual.TextStim(win=win, name='combinedFixationCross',
     text=u'+',
@@ -227,17 +228,17 @@ EndMessage = visual.TextStim(win=win, name='EndMessage',
 
 
 ####TRIAL HANDLERS:
-audiotrials = data.TrialHandler(nReps=15, method='random', 
+audiotrials = data.TrialHandler(nReps=10, method='random', 
     extraInfo=expInfo, originPath=-1,
     trialList=data.importConditions('audio_stimuli_description.csv'),
     seed=None, name='audiotrials');
 
-visualTrials = data.TrialHandler(nReps=15, method='random', 
+visualTrials = data.TrialHandler(nReps=10, method='random', 
     extraInfo=expInfo, originPath=-1,
     trialList=data.importConditions('visualAndCombined.csv'),
     seed=None, name='visualTrials');
 
-combinedTrials = data.TrialHandler(nReps=15, method='fullRandom', 
+combinedTrials = data.TrialHandler(nReps=10, method='fullRandom', 
     extraInfo=expInfo, originPath=-1,
     trialList=data.importConditions('visualAndCombined.csv'),
     seed=None, name='combinedTrials');
@@ -412,7 +413,7 @@ routineTimer.reset()
 
 
 
-    # ------Prepare to start Routine "AudioInstruction"-------
+#     # ------Prepare to start Routine "AudioInstruction"-------
 t = 0
 AudioInstructionClock.reset()  # clock
 frameN = -1
@@ -896,8 +897,8 @@ for thisVisualTrial in visualTrials:
     routineTimer.reset()
     thisExp.nextEntry()
     
-# completed 15 repeats of 'visualTrials'
-# ------Prepare to start Routine "CombinedInstruction"-------
+# # completed 15 repeats of 'visualTrials'
+# # ------Prepare to start Routine "CombinedInstruction"-------
 t = 0
 CombinedInstructionClock.reset()  # clock
 frameN = -1
@@ -976,7 +977,7 @@ thisExp.nextEntry()
 # the Routine "CombinedInstruction" was not non-slip safe, so reset the non-slip timer
 routineTimer.reset()
 
-# set up handler to look after randomisation of conditions etc
+# # # set up handler to look after randomisation of conditions etc
 
 thisExp.addLoop(combinedTrials)  # add the loop to the experiment
 thisCombinedTrial = combinedTrials.trialList[0]  # so we can initialise stimuli with some values
@@ -998,8 +999,9 @@ for thisCombinedTrial in combinedTrials:
     frameN = -1
     continueRoutine = True
     # update component parameters for each repeat
-    currentBump = generate_bump(totalNumberOfDots, scopeOfTheDistribution)
-    CombVisualStandard = visual.ElementArrayStim(win=win, name="CombVisualStandard", units="pix", fieldPos = [-2.25,0], fieldSize=[150,150], nElements=totalNumberOfDots, elementTex=None, elementMask="circle", xys=currentBump, sizes=sizeOfDots)
+    # currentBump = generate_bump(totalNumberOfDots, scopeOfTheDistribution)
+    # CombVisualStandard = visual.ElementArrayStim(win=win, name="CombVisualStandard", units="pix", fieldPos = [-2.25,0], fieldSize=[150,150], nElements=totalNumberOfDots, elementTex=None, elementMask="circle", xys=currentBump, sizes=sizeOfDots)
+    CombVisualStandard = visual.ElementArrayStim(win=win, name="CombVisualStandard", units="pix", fieldPos = locationOfCombinedStandard, fieldSize=[150,150], nElements=totalNumberOfDots, elementTex=None, elementMask="circle", xys=generate_bump(totalNumberOfDots, scopeOfTheDistribution), sizes=sizeOfDots)
     CombComparisonResponse = event.BuilderKeyResponse()
     # keep track of which components have finished
     CombinedTrialsComponents = [CombinedISI1, CombVisualStandard, CombSoundStandard, AfterStandardISI, CombSoundComparison, CombVisualComparison, CombVisualNoiseElement, CombComparisonResponse, combineaudioFix, combinedFixationCross, CombinedISI2]
@@ -1013,6 +1015,7 @@ for thisCombinedTrial in combinedTrials:
         t = CombinedTrialsClock.getTime()
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
         # update/draw components on each frame
+        
         
         # *CombVisualStandard* updates
         if t >= 1 and CombVisualStandard.status == NOT_STARTED:
@@ -1101,6 +1104,7 @@ for thisCombinedTrial in combinedTrials:
                 # a response ends the routine
                 continueRoutine = False
         # start/stop combineaudioFix
+
         if t >= 0.3 and combineaudioFix.status == NOT_STARTED:
             # keep track of start time/frame for later
             combineaudioFix.tStart = t
@@ -1123,6 +1127,8 @@ for thisCombinedTrial in combinedTrials:
             CombinedISI1.frameNStart = frameN  # exact frame index
             CombinedISI1.start(0.3)
         elif CombinedISI1.status == STARTED:  # one frame should pass before updating params and completing
+            # combineaudioFix = fixationSound.setSound(_thisDir +'/sounds/fixationSound.wav', secs=-1)
+            # currentBump = generate_bump(totalNumberOfDots, scopeOfTheDistribution)
             CombinedISI1.complete()  # finish the static period
         # *AfterStandardISI* period
         if t >= 1.5 and AfterStandardISI.status == NOT_STARTED:
