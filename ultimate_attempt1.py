@@ -165,6 +165,7 @@ VisualStandard = defaultDot
 VisualISIBefore = core.StaticPeriod(win=win, screenHz=expInfo['frameRate'], name='VisualISIBefore')
 VisualBreak = core.StaticPeriod(win=win, screenHz=expInfo['frameRate'], name='VisualBreak')
 VisualComparison = defaultDot
+VisualStandardNoiseElement = defaultDot
 VisualNoiseElement = defaultDot
 fixationCross = visual.TextStim(win=win, name='fixationCross',
     text=u'+',
@@ -193,6 +194,7 @@ CombinedISI1 = core.StaticPeriod(win=win, screenHz=expInfo['frameRate'], name='C
 #     flipHoriz=False, flipVert=False,
 #     texRes=128, interpolate=True, depth=-1.0)
 CombVisualStandard = defaultDot
+CombVisualStandardNoise = defaultDot
 CombSoundStandard = sound.Sound(_thisDir + '/sounds/legit/right35.wav', secs=-1)
 CombSoundStandard.setVolume(1)
 AfterStandardISI = core.StaticPeriod(win=win, screenHz=expInfo['frameRate'], name='AfterStandardISI')
@@ -744,11 +746,15 @@ for thisVisualTrial in visualTrials:
     continueRoutine = True
     # update component parameters for each repeat
     # VisualStandard.setImage('/Users/admin/Documents/IT&Cognition/Cognitive Science2/experiment-exam/catimg.png')
-    currentBump = generate_bump(totalNumberOfDots, scopeOfTheDistribution)
-    VisualStandard = visual.ElementArrayStim(win=win, name="VisualStandard", units="pix", fieldPos = [0,0], fieldSize=[150,150], nElements=totalNumberOfDots, elementTex=None, elementMask="circle", xys=currentBump, sizes=sizeOfDots)
+    # currentBump = generate_bump(totalNumberOfDots, scopeOfTheDistribution)
+    # VisualStandard = visual.ElementArrayStim(win=win, name="VisualStandard", units="pix", fieldPos = [0,0], fieldSize=[150,150], nElements=totalNumberOfDots, elementTex=None, elementMask="circle", xys=currentBump, sizes=sizeOfDots)
+    # VisualStandardNoiseElement = visual.ElementArrayStim(win=win, name="VisualStandardNoiseElement", 
+    #             units="pix", fieldPos = [0,0], fieldSize=[1280,800], 
+    #             nElements=totalNumberOfDots, elementTex=None, elementMask="circle", 
+    #             xys=currentBump, sizes=sizeOfDots)
     VisualDecision = event.BuilderKeyResponse()
     # keep track of which components have finished
-    VisualTrialsComponents = [VisualStandard, VisualISIBefore, VisualBreak, VisualComparison, VisualNoiseElement, VisualDecision, fixationCross]
+    VisualTrialsComponents = [VisualStandard, VisualISIBefore, VisualStandardNoiseElement, VisualBreak, VisualComparison, VisualNoiseElement, VisualDecision, fixationCross]
     for thisComponent in VisualTrialsComponents:
         if hasattr(thisComponent, 'status'):
             thisComponent.status = NOT_STARTED
@@ -767,11 +773,15 @@ for thisVisualTrial in visualTrials:
         if t >= 1 and VisualStandard.status == NOT_STARTED:
             # keep track of start time/frame for later
             VisualStandard.tStart = t
+            VisualStandardNoiseElement.tStart = t
             VisualStandard.frameNStart = frameN  # exact frame index
+            VisualStandardNoiseElement.frameNStart = frameN
             VisualStandard.setAutoDraw(True)
+            VisualStandardNoiseElement.setAutoDraw(True)
         frameRemains = 1 + 0.5- win.monitorFramePeriod * 0.75  # most of one frame period left
         if VisualStandard.status == STARTED and t >= frameRemains:
             VisualStandard.setAutoDraw(False)
+            VisualStandardNoiseElement.setAutoDraw(False)
             newBump = generate_bump(totalNumberOfDots, scopeOfTheDistribution)
             comparisonBump = extract_noise(newBump, noise)
             numberOfNoiseDots = totalNumberOfDots - len(comparisonBump)
@@ -846,6 +856,31 @@ for thisVisualTrial in visualTrials:
             # keep track of start time/frame for later
             VisualISIBefore.tStart = t
             VisualISIBefore.frameNStart = frameN  # exact frame index
+
+            standardNewBump = generate_bump(totalNumberOfDots, scopeOfTheDistribution)
+            standardBump = extract_noise(standardNewBump, noise)
+            standardNumberOfNoiseDots = totalNumberOfDots - len(standardBump)
+            currentLocation = tools.monitorunittools.deg2pix(location, mon, correctFlat=True)
+            VisualStandard = visual.ElementArrayStim(win=win, name="VisualStandard", 
+                units="pix", fieldPos = [0,0], fieldSize=[150,150], 
+                nElements=len(standardBump), elementTex=None, elementMask="circle", 
+                xys=standardBump, sizes=sizeOfDots)
+            standardNoiseDotsCoordinates = []
+            for x in range(standardNumberOfNoiseDots):
+                dot_x = random.uniform(-640+(sizeOfDots/2), 640-(sizeOfDots/2))
+                dot_y = random.uniform(-borderOfYnoise, borderOfYnoise)
+                standardNoiseDotsCoordinates.append([dot_x, dot_y])
+            # VisualComparison.setImage('/Users/admin/Documents/IT&Cognition/Cognitive Science2/experiment-exam/catimg.png')
+            # component updates done
+            VisualStandardNoiseElement = visual.ElementArrayStim(win=win, name="VisualStandardNoiseElement", 
+                units="pix", fieldPos = [0,0], fieldSize=[1280,800], 
+                nElements=standardNumberOfNoiseDots, elementTex=None, elementMask="circle", 
+                xys=standardNoiseDotsCoordinates, sizes=sizeOfDots)
+
+
+
+
+
             VisualISIBefore.start(1.0)
         elif VisualISIBefore.status == STARTED:  # one frame should pass before updating params and completing
             VisualISIBefore.complete()  # finish the static period
@@ -1001,10 +1036,10 @@ for thisCombinedTrial in combinedTrials:
     # update component parameters for each repeat
     # currentBump = generate_bump(totalNumberOfDots, scopeOfTheDistribution)
     # CombVisualStandard = visual.ElementArrayStim(win=win, name="CombVisualStandard", units="pix", fieldPos = [-2.25,0], fieldSize=[150,150], nElements=totalNumberOfDots, elementTex=None, elementMask="circle", xys=currentBump, sizes=sizeOfDots)
-    CombVisualStandard = visual.ElementArrayStim(win=win, name="CombVisualStandard", units="pix", fieldPos = locationOfCombinedStandard, fieldSize=[150,150], nElements=totalNumberOfDots, elementTex=None, elementMask="circle", xys=generate_bump(totalNumberOfDots, scopeOfTheDistribution), sizes=sizeOfDots)
+    # CombVisualStandard = visual.ElementArrayStim(win=win, name="CombVisualStandard", units="pix", fieldPos = locationOfCombinedStandard, fieldSize=[150,150], nElements=totalNumberOfDots, elementTex=None, elementMask="circle", xys=generate_bump(totalNumberOfDots, scopeOfTheDistribution), sizes=sizeOfDots)
     CombComparisonResponse = event.BuilderKeyResponse()
     # keep track of which components have finished
-    CombinedTrialsComponents = [CombinedISI1, CombVisualStandard, CombSoundStandard, AfterStandardISI, CombSoundComparison, CombVisualComparison, CombVisualNoiseElement, CombComparisonResponse, combineaudioFix, combinedFixationCross, CombinedISI2]
+    CombinedTrialsComponents = [CombinedISI1, CombVisualStandard, CombVisualStandardNoise, CombSoundStandard, AfterStandardISI, CombSoundComparison, CombVisualComparison, CombVisualNoiseElement, CombComparisonResponse, combineaudioFix, combinedFixationCross, CombinedISI2]
     for thisComponent in CombinedTrialsComponents:
         if hasattr(thisComponent, 'status'):
             thisComponent.status = NOT_STARTED
@@ -1021,11 +1056,15 @@ for thisCombinedTrial in combinedTrials:
         if t >= 1 and CombVisualStandard.status == NOT_STARTED:
             # keep track of start time/frame for later
             CombVisualStandard.tStart = t
+            CombVisualStandardNoise.tStart = t
             CombVisualStandard.frameNStart = frameN  # exact frame index
+            CombVisualStandardNoise.frameNStart = frameN
             CombVisualStandard.setAutoDraw(True)
+            CombVisualStandardNoise.setAutoDraw(True)
         frameRemains = 1 + 0.5- win.monitorFramePeriod * 0.75  # most of one frame period left
         if CombVisualStandard.status == STARTED and t >= frameRemains:
             CombVisualStandard.setAutoDraw(False)
+            CombVisualStandardNoise.setAutoDraw(False)
             newBump = generate_bump(totalNumberOfDots, scopeOfTheDistribution)
             comparisonBump = extract_noise(newBump, noise)
             numberOfNoiseDots = totalNumberOfDots - len(comparisonBump)
@@ -1125,6 +1164,25 @@ for thisCombinedTrial in combinedTrials:
             # keep track of start time/frame for later
             CombinedISI1.tStart = t
             CombinedISI1.frameNStart = frameN  # exact frame index
+            newBump = generate_bump(totalNumberOfDots, scopeOfTheDistribution)
+            CombStandardBump = extract_noise(newBump, noise)
+            CombNumberOfNoiseDots = totalNumberOfDots - len(CombStandardBump)
+            currentLocation = tools.monitorunittools.deg2pix([-2.25,0], mon, correctFlat=True)
+            CombVisualStandard = visual.ElementArrayStim(win=win, name="CombVisualStandard", 
+                units="pix", fieldPos = locationOfCombinedStandard, fieldSize=[150,150], 
+                nElements=len(CombStandardBump), elementTex=None, elementMask="circle", 
+                xys=CombStandardBump, sizes=sizeOfDots)
+            CombNoiseDotsCoordinates = []
+            for x in range(CombNumberOfNoiseDots):
+                dot_x = random.uniform(-640+(sizeOfDots/2), 640-(sizeOfDots/2))
+                dot_y = random.uniform(-borderOfYnoise, borderOfYnoise)
+                CombNoiseDotsCoordinates.append([dot_x, dot_y])
+            # VisualComparison.setImage('/Users/admin/Documents/IT&Cognition/Cognitive Science2/experiment-exam/catimg.png')
+            # component updates done
+            CombVisualStandardNoise = visual.ElementArrayStim(win=win, name="CombVisualStandardNoise", 
+                units="pix", fieldPos = [0,0], fieldSize=[1280,800], 
+                nElements=CombNumberOfNoiseDots, elementTex=None, elementMask="circle", 
+                xys=CombNoiseDotsCoordinates, sizes=sizeOfDots)
             CombinedISI1.start(0.3)
         elif CombinedISI1.status == STARTED:  # one frame should pass before updating params and completing
             # combineaudioFix = fixationSound.setSound(_thisDir +'/sounds/fixationSound.wav', secs=-1)

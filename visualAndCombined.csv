@@ -4,31 +4,31 @@ location,correspondingAudio,noise
 "[0,0]",/sounds/legit/equal.wav,0.36
 "[0,0]",/sounds/legit/equal.wav,0.49
 "[0,0]",/sounds/legit/equal.wav,0.62
-"[2.25,0]",/sounds/legit/right30.wav,0.1
-"[2.25,0]",/sounds/legit/right30.wav,0.23
-"[2.25,0]",/sounds/legit/right30.wav,0.36
-"[2.25,0]",/sounds/legit/right30.wav,0.49
-"[2.25,0]",/sounds/legit/right30.wav,0.62
-"[4.5,0]",/sounds/legit/right60.wav,0.1
-"[4.5,0]",/sounds/legit/right60.wav,0.23
-"[4.5,0]",/sounds/legit/right60.wav,0.36
-"[4.5,0]",/sounds/legit/right60.wav,0.49
-"[4.5,0]",/sounds/legit/right60.wav,0.62
+"[2.25,0]",/sounds/legit/right35.wav,0.1
+"[2.25,0]",/sounds/legit/right35.wav,0.23
+"[2.25,0]",/sounds/legit/right35.wav,0.36
+"[2.25,0]",/sounds/legit/right35.wav,0.49
+"[2.25,0]",/sounds/legit/right35.wav,0.62
+"[4.5,0]",/sounds/legit/right70.wav,0.1
+"[4.5,0]",/sounds/legit/right70.wav,0.23
+"[4.5,0]",/sounds/legit/right70.wav,0.36
+"[4.5,0]",/sounds/legit/right70.wav,0.49
+"[4.5,0]",/sounds/legit/right70.wav,0.62
 "[6.75,0]",/sounds/legit/right100.wav,0.1
 "[6.75,0]",/sounds/legit/right100.wav,0.23
 "[6.75,0]",/sounds/legit/right100.wav,0.36
 "[6.75,0]",/sounds/legit/right100.wav,0.49
 "[6.75,0]",/sounds/legit/right100.wav,0.62
-"[-2.25,0]",/sounds/legit/left30.wav,0.1
-"[-2.25,0]",/sounds/legit/left30.wav,0.23
-"[-2.25,0]",/sounds/legit/left30.wav,0.36
-"[-2.25,0]",/sounds/legit/left30.wav,0.49
-"[-2.25,0]",/sounds/legit/left30.wav,0.62
-"[-4.5, 0]",/sounds/legit/left60.wav,0.1
-"[-4.5, 0]",/sounds/legit/left60.wav,0.23
-"[-4.5, 0]",/sounds/legit/left60.wav,0.36
-"[-4.5, 0]",/sounds/legit/left60.wav,0.49
-"[-4.5, 0]",/sounds/legit/left60.wav,0.62
+"[-2.25,0]",/sounds/legit/left35.wav,0.1
+"[-2.25,0]",/sounds/legit/left35.wav,0.23
+"[-2.25,0]",/sounds/legit/left35.wav,0.36
+"[-2.25,0]",/sounds/legit/left35.wav,0.49
+"[-2.25,0]",/sounds/legit/left35.wav,0.62
+"[-4.5, 0]",/sounds/legit/left70.wav,0.1
+"[-4.5, 0]",/sounds/legit/left70.wav,0.23
+"[-4.5, 0]",/sounds/legit/left70.wav,0.36
+"[-4.5, 0]",/sounds/legit/left70.wav,0.49
+"[-4.5, 0]",/sounds/legit/left70.wav,0.62
 "[-6.75,0]",/sounds/legit/left100.wav,0.1
 "[-6.75,0]",/sounds/legit/left100.wav,0.23
 "[-6.75,0]",/sounds/legit/left100.wav,0.36
